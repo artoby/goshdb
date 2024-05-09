@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 from openpyxl.utils.cell import column_index_from_string
 
 
-class GSheetsSheet:
+class Sheet:
     def __init__(self, secret_dir: Path, spreadsheet_id: str, sheet_name: str, header: list[str]):
         self.secret_dir = secret_dir
         self.spreadsheet_id = spreadsheet_id

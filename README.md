@@ -1,5 +1,5 @@
-# gseetsdb
-Python client to key-value database based on Google Sheets
+# goshdb
+GOogle SHeets DataBase - Python client to key-value database based on Google Sheets
 
 Sheet works as a table and has the following structure:
 ```
@@ -12,7 +12,7 @@ Sheet works as a table and has the following structure:
 
 # Installation
 ```bash
-pip install gseetsdb
+pip install goshdb
 ```
 
 # Configuration
@@ -22,9 +22,9 @@ pip install gseetsdb
 <details>
 <summary>Details</summary>
 
-* Though `GSheetsTable` uses only provided spreadsheet, credentials technically 
+* Though `Table` uses only provided spreadsheet, credentials technically 
 allow to read/write all the spreadsheets in the account.
-* So it's recommended to use `GSheetsTable` with a special service (non-personal)
+* So it's recommended to use `Table` with a special service (non-personal)
 account that doesn't have critical/secret spreadsheets that might be compromised.
 
 </details>
@@ -35,7 +35,7 @@ account that doesn't have critical/secret spreadsheets that might be compromised
 <summary>Details</summary>
 
 * If you do this for the first time - take `credentials.json` and put it in `secret_dir`.
-* On a first attempt to create `GSheetsTable` it'll open a browser window, ask you to sign in 
+* On a first attempt to create `Table` it'll open a browser window, ask you to sign in 
 the target test account.
 * Then the `token.json` file will be generated automatically and put in `secret_dir`.
 * The `token.json` file will be used automatically for further access to the
@@ -58,7 +58,7 @@ access it (see Step 1).
 
 # Usage
 ```python
-from gseetsdb import GSheetsTable
+from goshdb import Table
 from pathlib import Path
 
 # Take spreadsheet ID from your spreadsheet URL:
@@ -68,8 +68,8 @@ SPREADSHEET_ID = '...'
 SHEET_NAME = '...'  
 
 
-# Create a GSheetsTable object. If you do this for the first time - it'll open a browser window (see Step 2 details)
-table = GSheetsTable(
+# Create a Table object. If you do this for the first time - it'll open a browser window (see Step 2 details)
+table = Table(
     secret_dir=Path('path/to/secret_dir'),
     spreadsheet_id=SPREADSHEET_ID,
     sheet_name=SHEET_NAME

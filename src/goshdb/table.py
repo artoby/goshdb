@@ -2,10 +2,10 @@ from pathlib import Path
 from typing import Optional
 import json
 
-from gsheetsdb.sheet import GSheetsSheet
+from goshdb.sheet import Sheet
 
 
-class GSheetsTable:
+class Table:
     def __init__(self, secret_dir: Path, spreadsheet_id: str, sheet_name: str):
         """
         Class that represents a table. See README.md for more details.
@@ -14,10 +14,10 @@ class GSheetsTable:
         :param spreadsheet_id: ID of the target spreadsheet.
         :param sheet_name: Name of the sheet that will be used as a table.
         """
-        self.sheet = GSheetsSheet(secret_dir=secret_dir,
-                                  spreadsheet_id=spreadsheet_id,
-                                  sheet_name=sheet_name,
-                                  header=['key', 'value'])
+        self.sheet = Sheet(secret_dir=secret_dir,
+                           spreadsheet_id=spreadsheet_id,
+                           sheet_name=sheet_name,
+                           header=['key', 'value'])
 
     def has_key(self, key: str) -> bool:
         row_number = self.__try_get_key_row_number(key)

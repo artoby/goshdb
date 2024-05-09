@@ -1,13 +1,13 @@
 from pathlib import Path
-from gsheetsdb.table import GSheetsTable
+from goshdb.table import Table
 
 
-def test_gsheets_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_name: str):
+def test_gosh_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_name: str):
     """
     The test is put here but not in test folder because it requires a real Google Sheets account.
     :param sheet_name: Name of a sheet that either don't exist or exist thou contains header only
     """
-    table = GSheetsTable(secret_dir=secret_dir, spreadsheet_id=spreadsheet_id, sheet_name=sheet_name)
+    table = Table(secret_dir=secret_dir, spreadsheet_id=spreadsheet_id, sheet_name=sheet_name)
 
     table.set_string('key1', 'value1')
     assert table.get_string('key1') == 'value1'
@@ -29,7 +29,7 @@ def test_gsheets_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_nam
     table.delete_key('key2')
     table.delete_key('key3')
     assert table.get_all_keys() == []
-    assert table.has_key('key1') == False
+    assert table.has_key('key1') is False
     table.set_string('key1', 'value5')
     table.set_string('key1', 'value6')
     assert table.get_string('key1') == 'value6'
@@ -42,4 +42,4 @@ def test_gsheets_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_nam
     assert table.get_all_keys() == ['key1']
     table.delete_key('key1')
 
-    print('test_gsheets_db_integration passed')
+    print('test_gosh_db_integration passed')

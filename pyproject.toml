@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "gsheetsdb"
+name = "goshdb"
 version = "0.1.0"
-description = "Python client to key-value database based on Google Sheets"
+description = "GOogle SHeets DataBase - Python client to key-value database based on Google Sheets"
 authors = ["Artyom Vorobyov <artyom.vorobyov@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/artoby/gseetsdb"
+repository = "https://github.com/artoby/goshdb"
 keywords = ["google", "sheets", "spreadsheet", "database", "key-value", "free", "nosql"]
 classifiers = [
     "Topic :: Database",
