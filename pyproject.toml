@@ -3,6 +3,13 @@ name = "gsheetsdb"
 version = "0.1.0"
 description = "Python client to key-value database based on Google Sheets"
 authors = ["Artyom Vorobyov <artyom.vorobyov@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/artoby/gseetsdb"
+keywords = ["google", "sheets", "spreadsheet", "database", "key-value", "free", "nosql"]
+classifiers = [
+    "Topic :: Database",
+]
 
 [tool.poetry.dependencies]
 python = "~3.10"
