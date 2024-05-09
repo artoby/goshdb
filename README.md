@@ -1,16 +1,12 @@
 # goshdb
 GOogle SHeets DataBase - Python client to key-value database based on Google Sheets
 
-Sheet works as a table and has the following structure:
-```
-| key | value |
-|-----|-------|
-|     |       |
-|     |       |
-|     |       |
-```
+Sheet works as a table and has the following look & structure:
 
-Use cases
+<img src="https://github.com/artoby/goshdb/assets/6637041/cf3ba5d4-e1df-42ff-8487-3f18a27190fd" width="300">
+
+
+# Use cases
 - Store configuration with ability to change it on the fly
 - Store data that should be shared between multiple users / machines
 - Write status of a long-running process and observe it in real-time in Google Sheets
