@@ -10,6 +10,38 @@ Sheet works as a table and has the following structure:
 |     |       |
 ```
 
+Use cases
+- Store configuration with ability to change it on the fly
+- Store data that should be shared between multiple users / machines
+- Write status of a long-running process and observe it in real-time in Google Sheets
+- Review data modification history in Google Sheets UI (File -> Version history -> See version history)
+
+Features
+- Simple key-value interface (get/set string/object)
+
+Advantages
+- Free storage (Google Sheets API has free quota)
+- Concurrent read (Supports parallel read from multiple clients)
+- No need to create a server
+- User-friendly Google Sheets UI for data review & modification
+- No need to install any software on the client side (only Python)
+- Simple get/set methods instead of SQL queries
+- No need to create a database schema (just create a new sheet)
+- Data backup, synchronization, availability, and security are managed by Google Sheets
+
+Limitations
+- Not suitable for high-frequency read/write operations (Google Sheets API has read/write quota: 
+300/minute per project, 60/minute per user per project)
+- Not suitable for concurrent write (Google Sheets API has no locking mechanism)
+- Not suitable for very large data (Google Sheets has a limit of 10 million cells per spreadsheet, 
+i.e. 5 million key-value pairs
+- Not suitable for high-speed data access (Google Sheets API has a delay, takes ~0.3-1 second per 
+get/set operation)
+- Not suitable for complex queries, types, data structures, relations, validation and indexing 
+(only key-value interface)
+- Not suitable for sensitive & high-security data (Google Sheets API has access to all 
+spreadsheets in the account)
+
 # Installation
 ```bash
 pip install goshdb
