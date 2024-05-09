@@ -5,15 +5,14 @@ import json
 from gsheetsdb.sheet import GSheetsSheet
 
 
-class GSheetsDB:
+class GSheetsTable:
     def __init__(self, secret_dir: Path, spreadsheet_id: str, sheet_name: str):
         """
-        Database object. See README.md for more details.
+        Class that represents a table. See README.md for more details.
 
         :param secret_dir: Path to the directory containing credentials.json or token.json.
-        :param spreadsheet_id: ID of the target spreadsheet. You can find it in the URL of the spreadsheet:
-
-        :param sheet_name: Name of the sheet in the spreadsheet. If the sheet does not exist, it'll be created.
+        :param spreadsheet_id: ID of the target spreadsheet.
+        :param sheet_name: Name of the sheet that will be used as a table.
         """
         self.sheet = GSheetsSheet(secret_dir=secret_dir,
                                   spreadsheet_id=spreadsheet_id,

@@ -1,1 +1,1 @@
-from gsheetsdb.db import GSheetsDB
+from gsheetsdb.table import GSheetsTable
