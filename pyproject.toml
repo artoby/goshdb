@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "gsheetsdb"
+version = "0.1.0"
+description = "Python client to key-value database based on Google Sheets"
+authors = ["Artyom Vorobyov <artyom.vorobyov@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.10"
+
+google-api-python-client = ">= 2.128.0"
+google-auth-httplib2 = ">= 0.2.0"
+google-auth-oauthlib = ">= 1.2.0"
+openpyxl = ">= 3.1.0"
+
+[build-system]
+requires = [
+    "poetry-core"
+]
+build-backend = "poetry.core.masonry.api"
