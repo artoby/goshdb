@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "goshdb"
-version = "0.1.0"
+version = "0.2.0"
 description = "GOogle SHeets DataBase - Python client to key-value database based on Google Sheets"
 authors = ["Artyom Vorobyov <artyom.vorobyov@gmail.com>"]
 license = "MIT"
