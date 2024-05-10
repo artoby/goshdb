@@ -39,11 +39,14 @@ get/set operation)
 spreadsheets in the account)
 
 # Installation
+
 ```bash
 pip install goshdb
 ```
 
 # Configuration
+
+See [this video](https://youtu.be/_J6Hy6KFgx4) for step-by-step instruction & demo
 
 #### Step 1. Select a Google account that will be used to access the spreadsheet
 
