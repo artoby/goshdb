@@ -89,7 +89,7 @@ steps above
 
 # Usage
 ```python
-from goshdb import Table
+from goshdb import authenticate, Table
 from pathlib import Path
 
 # Take spreadsheet ID from your spreadsheet URL:
@@ -98,12 +98,13 @@ SPREADSHEET_ID = '...'
 # Provide a sheet name. It should be either new sheet or existing one that follows the required structure.
 SHEET_NAME = '...'  
 
-
+# Authenticate
+creds = authenticate(Path('path/to/secret_dir'))
 # Create a Table object. If you do this for the first time - it'll open a browser window (see Step 3 details)
 table = Table(
-    secret_dir=Path('path/to/secret_dir'),
+    creds=creds,
     spreadsheet_id=SPREADSHEET_ID,
-    sheet_name=SHEET_NAME
+    table_name=SHEET_NAME
 )
 
 # Write a key-value pair

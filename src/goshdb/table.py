@@ -1,24 +1,26 @@
-from pathlib import Path
 from typing import Optional
 import json
+from google.oauth2.credentials import Credentials
 
-from goshdb.sheet import Sheet
+from goshdb.api_wrap.sheet import Sheet
+from goshdb.api_wrap.spreadsheet import Spreadsheet
 
 
 class Table:
-    def __init__(self, secret_dir: Path, spreadsheet_id: str, sheet_name: str):
+    def __init__(self, creds: Credentials, spreadsheet_id: str, table_name: str, create_if_missing: bool = True):
         """
-        Class that represents a table. See README.md for more details.
+        Class that represents a table. Table is one sheet in the spreadsheet.
+        See README.md for more details.
 
-        :param secret_dir: Path to the directory containing credentials.json or token.json.
+        :param creds: Authenticated credentials object that will be used to access the Google Sheets API.
         :param spreadsheet_id: ID of the target spreadsheet.
-        :param sheet_name: Name of the sheet that will be used as a table.
+        :param table_name: Name of the sheet that will be used as a table.
         """
-        self.sheet = Sheet(secret_dir=secret_dir,
-                           spreadsheet_id=spreadsheet_id,
-                           sheet_name=sheet_name,
-                           header=['key', 'value'])
         self.keys_cache: list = []
+        self.sheet = self.__prepare_sheet(creds=creds,
+                                          spreadsheet_id=spreadsheet_id,
+                                          sheet_name=table_name,
+                                          create_if_missing=create_if_missing)
 
     def has_key(self, key: str) -> bool:
         row_number = self.__try_get_key_row_number(key)
@@ -91,6 +93,34 @@ class Table:
     def set_object(self, key: str, obj: object) -> None:
         value = json.dumps(obj)
         self.set_string(key, value)
+
+    @staticmethod
+    def __prepare_sheet(creds: Credentials,
+                        spreadsheet_id: str,
+                        sheet_name: str,
+                        create_if_missing: bool) -> Sheet:
+        spreadsheet = Spreadsheet(creds=creds, spreadsheet_id=spreadsheet_id)
+        is_new_sheet = not spreadsheet.has_sheet(sheet_name)
+        if is_new_sheet and (not create_if_missing):
+            raise ValueError(f'Sheet {sheet_name} does not exist')
+
+        sheet_id = spreadsheet.create_sheet(sheet_name, exist_ok=True)
+        sheet = Sheet(creds=creds,
+                      spreadsheet_id=spreadsheet_id,
+                      sheet_id=sheet_id,
+                      sheet_name=sheet_name)
+
+        header = ['key', 'value']
+        if is_new_sheet:
+            # Set the header
+            sheet.delete_columns('C', 'Z')
+            sheet.append_row(header)
+        else:
+            actual_header_raw = sheet.get_multiple_values('A1:Z1')
+            # We allow extra columns after required header columns
+            actual_header = actual_header_raw[0][:len(header)]
+            assert actual_header == header, f'Expected header to be {header}, but got: {actual_header}'
+        return sheet
 
     @staticmethod
     def __key_index_to_row_number(key_index: int) -> int:

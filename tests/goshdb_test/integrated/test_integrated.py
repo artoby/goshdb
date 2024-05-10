@@ -1,18 +1,34 @@
-from pathlib import Path
-from goshdb.table import Table
+from goshdb import Table, Db, authenticate
+import pytest
 
+from goshdb.test_utils.test_utils import get_test_data_dir
 
-def test_gosh_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_name: str):
-    """
-    The test is put here but not in test folder because it requires a real Google Sheets account.
-    :param sheet_name: Name of a sheet that either don't exist or exist thou contains header only
-    """
-    table = Table(secret_dir=secret_dir, spreadsheet_id=spreadsheet_id, sheet_name=sheet_name)
+def test_gosh_db_integration():
+    test_data_dir = get_test_data_dir(__file__)
+
+    secret_dir = test_data_dir / 'secret'
+    token_file = secret_dir / 'token.json'
+    if not token_file.is_file():
+        pytest.skip(f'token.json does not exist in {secret_dir}')
+
+    spreadsheet_id = '1bofFXyy7Lz-slQ1m0-mJcNGgJKuO9MVrSuisTxgHLDA'
+    sheet_name = 'integrated_test'
+
+    creds = authenticate(secret_dir=secret_dir)
+
+    db = Db(creds=creds, spreadsheet_id=spreadsheet_id)
+    if db.has_table(sheet_name):
+        db.delete_table(sheet_name)
+
+    table = db.get_table(sheet_name, create_if_missing=True)
 
     table.set_string('key1', 'value1')
     assert table.get_string('key1') == 'value1'
     assert table.get_all_keys() == ['key1']
     table.delete_key('key1', raise_on_missing=True)
+
+    table = Table(creds=creds, spreadsheet_id=spreadsheet_id, table_name=sheet_name, create_if_missing=False)
+
     assert table.get_all_keys() == []
     assert table.get_string('key1', raise_on_missing=False) is None
     assert table.has_key('key1') == False
@@ -41,5 +57,3 @@ def test_gosh_db_integration(secret_dir: Path, spreadsheet_id: str, sheet_name: 
     table.delete_key('key3')
     assert table.get_all_keys() == ['key1']
     table.delete_key('key1')
-
-    print('test_gosh_db_integration passed')
