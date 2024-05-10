@@ -31,8 +31,8 @@ class Sheet:
                                           valueInputOption='RAW',
                                           body=body).execute()
 
-    def set_multiple_values(self, range: str, values: list) -> None:
-        assert '!' not in range, f'range should not contain sheet name, i.e. "!": {range}'
+    def set_multiple_values(self, coord: str, values: list) -> None:
+        assert '!' not in coord, f'coord should not contain sheet name, i.e. "!": {coord}'
         body = {
             'values': values,
         }
@@ -40,30 +40,30 @@ class Sheet:
             .values() \
             .update(
                 spreadsheetId=self.spreadsheet_id,
-                range=f'{self.sheet_name}!{range}',
+                range=f'{self.sheet_name}!{coord}',
                 valueInputOption='RAW',
                 body=body) \
             .execute()
 
-    def set_value(self, range: str, value: str) -> None:
-        assert ':' not in range, f'range should reference only one cell but got: {range}'
-        self.set_multiple_values(range, [[value]])
+    def set_value(self, coord: str, value: str) -> None:
+        assert ':' not in coord, f'coord should reference only one cell but got: {coord}'
+        self.set_multiple_values(coord, [[value]])
 
-    def get_multiple_values(self, range: str) -> list[list[str]]:
-        assert '!' not in range, f'range should not contain sheet name, i.e. "!": {range}'
+    def get_multiple_values(self, coord: str) -> list[list[str]]:
+        assert '!' not in coord, f'coord should not contain sheet name, i.e. "!": {coord}'
         result = self.spreadsheets \
             .values() \
-            .get(spreadsheetId=self.spreadsheet_id, range=f'{self.sheet_name}!{range}') \
+            .get(spreadsheetId=self.spreadsheet_id, range=f'{self.sheet_name}!{coord}') \
             .execute()
         values = result.get('values', [])
         return values
 
-    def get_value(self, range: str) -> str:
-        values = self.get_multiple_values(range)
+    def get_value(self, coord: str) -> str:
+        values = self.get_multiple_values(coord)
         if not values:
             return ''
-        assert len(values) == 1, f'For {range} expected only one row, but got {len(values)}'
-        assert len(values[0]) == 1, f'For {range} expected only one column, but got {len(values[0])}'
+        assert len(values) == 1, f'For {coord} expected only one row, but got {len(values)}'
+        assert len(values[0]) == 1, f'For {coord} expected only one column, but got {len(values[0])}'
         return values[0][0]
 
     def delete_row(self, row_number: int) -> None:
