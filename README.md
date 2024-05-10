@@ -57,7 +57,17 @@ account that doesn't have critical/secret spreadsheets that might be compromised
 
 </details>
 
-#### Step 2. Obtain credentials.json file with this the [instruction](https://developers.google.com/sheets/api/quickstart/python)
+#### Step 2. Create a spreadsheet in your Google Sheets account.
+
+<details>
+<summary>Details</summary>
+
+* You should share the spreadsheet and provide write access to the account that will be used to 
+access it (see Step 1).
+
+</details>
+
+#### Step 3. Obtain credentials.json file with this the [instruction](https://developers.google.com/sheets/api/quickstart/python)
 
 <details>
 <summary>Details</summary>
@@ -70,16 +80,6 @@ the target test account.
 target spreadsheet.
 * You can use `token.json` to access the spreadsheet from another machine without completing the 
 steps above
-
-</details>
-
-#### Step 3. Create a spreadsheet in your Google Sheets account.
-
-<details>
-<summary>Details</summary>
-
-* You should share the spreadsheet and provide write access to the account that will be used to 
-access it (see Step 1).
 
 </details>
 
@@ -96,7 +96,7 @@ SPREADSHEET_ID = '...'
 SHEET_NAME = '...'  
 
 
-# Create a Table object. If you do this for the first time - it'll open a browser window (see Step 2 details)
+# Create a Table object. If you do this for the first time - it'll open a browser window (see Step 3 details)
 table = Table(
     secret_dir=Path('path/to/secret_dir'),
     spreadsheet_id=SPREADSHEET_ID,
